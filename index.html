@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>calc</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"></script>
+</head>
+<body>
+<div class="calc-render"></div>
+<script type="text/template" id="root-tpl">
+    <div class="container bg-light">
+        <h5>Калькулятор стоимости</h5>
+
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-link="vmware" href="javascript:void(0)">WMware</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-link="kvm" href="javascript:void(0)">KVM</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-link="lic" href="javascript:void(0)">Лицензии</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-link="storage" href="javascript:void(0)">Хранилище</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-link="office" href="javascript:void(0)">Офис</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-link="messages" href="javascript:void(0)">Месседжеры</a>
+            </li>
+        </ul>
+
+        <div class="row mb-3">
+            <div class="col-md-7 themed-grid-col bg-white input-container" style="margin: 20px; border-radius: 10px">
+
+            </div>
+            <div class="col-md-4 themed-grid-col bg-white result-container" style="margin: 20px; border-radius: 10px">
+
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/template" id="vmware-kvm-tpl">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Наименование</th>
+            <th scope="col">Количество</th>
+            <th scope="col">Цена</th>
+            <th scope="col">Стоимость</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% items.forEach( function (element) { %>
+        <tr>
+            <td><%= element.name%></td>
+            <td>
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-outline-secondary" type="button" id="button-addon1">-</button>
+                    </div>
+                    <input type="text" class="form-control">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" id="button-addon2">+</button>
+                    </div>
+                    <span>ШТ</span>
+                </div>
+            </td>
+            <td>
+                <span>0</span>P
+            </td>
+            <td>
+                <span>0</span>P
+            </td>
+        </tr>
+        <% }); %>
+        </tbody>
+    </table>
+</script>
+
+<script src="calc.js"></script>
+<script type="text/javascript">
+    tildaCalculator.init('.calc-render');
+</script>
+</body>
+</html>
