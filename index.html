@@ -62,20 +62,20 @@
             <td>
                 <div class="input-group input-group-sm mb-3">
                     <div class="input-group-prepend">
-                        <button class="btn btn-outline-secondary" type="button" id="button-addon1">-</button>
+                        <button class="btn btn-outline-secondary" type="button" id="decrease">-</button>
                     </div>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" data-code="<%= element.code%>" data-tab="<%= tab%>" value="0" disabled />
                     <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button" id="button-addon2">+</button>
+                        <button class="btn btn-outline-secondary" type="button" id="increase">+</button>
                     </div>
-                    <span>ШТ</span>
+                    <span><%= element.unit%></span>
                 </div>
             </td>
             <td>
-                <span>0</span>P
+                <span><%= tildaCalculator.convertAmount(element.cost, element.per, 'month')%></span> P
             </td>
             <td>
-                <span>0</span>P
+                <span id="<%= element.code%>-total">0</span> P
             </td>
         </tr>
         <% }); %>
