@@ -5,6 +5,8 @@
         var app = {
             inputContainer: '.input-container',
             resultContainer: '.result-container',
+            decreaseButton: 'button#decrease',
+            increaseButton: 'button#increase',
             link: '.nav-link',
             rootTpl: 'root-tpl',
             kvmTpl: 'vmware-kvm-tpl',
@@ -41,7 +43,11 @@
                 messages: ['Express'],
             },
             result: {
-
+                vmware: {},
+                kvm: {},
+                lic: {},
+                storage: {},
+                messages: {},
             },
             tabs: {
 
@@ -73,7 +79,8 @@
             var tpl = _.template(document.getElementById(app.kvmTpl).innerHTML);
 
             $(app.inputContainer).html(tpl({
-                items: itemsForRender
+                tab: $tab,
+                items: itemsForRender,
             }));
 
             console.log(itemsForRender);
@@ -103,13 +110,80 @@
 
             app.renderInputContainer('vmware');
             app.renderResultContainer();
-            app.bindEvents();
+            app.bindEvents($root);
         };
 
-        app.bindEvents = function () {
+        app.switchTab = function ($tab) {
+            app.renderInputContainer($tab);
+        };
+
+        app.convertAmount = function ($amount, $inType, $outType) {
+            // Переводим для начала в дни.
+            var amountPerDay = 0,
+                resultAmount = 0;
+            switch ($inType) {
+                case 'hour': amountPerDay = $amount * 24;
+                    break;
+                case 'day': amountPerDay = $amount;
+                    break;
+                case 'month': amountPerDay = $amount * 12 / 365;
+                    break;
+                case 'year': amountPerDay = $amount / 365;
+                    break;
+                default: throw new Error('wrong input type ' + $inType);
+            }
+
+            switch ($outType) {
+                case 'day': resultAmount = amountPerDay;
+                    break;
+                case 'month': resultAmount = $amount * 365 / 12;
+                    break;
+                case 'year': resultAmount = $amount * 365;
+                    break;
+                default: throw new Error('wrong output type ' + $outType);
+            }
+
+            return Math.round(resultAmount);
+        };
+
+        app.bindEvents = function ($root) {
             $(app.link).on('click', function () {
+                if ($(this).hasClass('active')) {
+                    return false;
+                }
+
                 $(app.link).removeClass('active');
                 $(this).addClass('active');
+
+                app.switchTab($(this).data('link'));
+            });
+
+            $($root).on('click', app.increaseButton, function () {
+                var input = $(this).closest('.input-group.input-group-sm').find('input'),
+                    value = parseInt(input.val()) + 1;
+
+                input.val(value);
+
+                app.result[input.data('tab')][input.data('code')] = value;
+
+                app.renderResultContainer();
+            });
+
+            $($root).on('click', app.decreaseButton, function () {
+                var input = $(this).closest('.input-group.input-group-sm').find('input');
+
+                if (parseInt(input.val()) <= 0)
+                    return false;
+
+                var value = parseInt(input.val()) - 1;
+
+                input.val(value);
+                app.result[input.data('tab')][input.data('code')] = value;
+
+                if (value === 0)
+                    delete app.result[input.data('tab')][input.data('code')];
+
+                app.renderResultContainer();
             });
         };
 
