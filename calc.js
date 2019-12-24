@@ -5,13 +5,14 @@
         var app = {
             inputContainer: '.input-container',
             resultContainer: '.result-container',
-            decreaseButton: 'button#decrease',
-            increaseButton: 'button#increase',
+            decreaseButton: 'a.decrease',
+            increaseButton: 'a.increase',
             cleanTabLink: '.clean-tab',
             link: '.nav-link',
             rootTpl: 'root-tpl',
             kvmTpl: 'vmware-kvm-tpl',
             resultTpl: 'result-tpl',
+            activeTab: 'vmware',
             mapOfServices: {
                 vmware: [
                     'IS-VHDD-SAS-GB-D-CS-FACT-ESX',
@@ -68,34 +69,39 @@
         };
 
         app.renderResultContainer = function () {
-            var items = {};
+            var items = {},
+                resultTotal = 0;
             for (var tab in app.result) {
                 if (!$.isEmptyObject(app.result[tab])) {
                     items[tab] = {};
+                    var total = 0;
                     for (var code in app.result[tab]) {
                         var product = app.extractFromJson(code);
                         items[tab][code] = {
                             name: product['name'],
                             count: app.result[tab][code],
                             unit: product['unit'],
-                            amount: app.convertAmount(product['cost'], product['per'], 'month') * app.result[tab][code]
-                        }
+                            amount: app.roundAmount(app.convertAmount(product['cost'], product['per'], 'month') * app.result[tab][code])
+                        };
+                        total+= parseFloat(items[tab][code].amount);
+                        resultTotal+= parseFloat(items[tab][code].amount);
                     }
+                    items[tab]['total'] = app.roundAmount(total);
                 }
             }
-            console.log(items)
+
             var tpl = _.template(document.getElementById(app.resultTpl).innerHTML);
 
             $(app.resultContainer).html(tpl({
-                items: items
+                resultTotal: app.roundAmount(resultTotal),
+                items: items,
             }));
         };
 
         app.renderInputCommon = function ($tab) {
             var itemsForRender = [];
-
+            console.log(app.result[$tab]);
             app.mapOfServices[$tab].forEach(function (index) {
-                console.log(app.extractFromJson(index));
                 itemsForRender.push(app.extractFromJson(index));
             });
 
@@ -103,10 +109,9 @@
 
             $(app.inputContainer).html(tpl({
                 tab: $tab,
+                tabData: app.result[$tab],
                 items: itemsForRender,
             }));
-
-            console.log(itemsForRender);
         };
 
         app.extractFromJson = function($key) {
@@ -131,13 +136,14 @@
                 parrent.innerHTML = tpl();
             });
 
-            app.renderInputContainer('vmware');
+            app.renderInputContainer(app.activeTab);
             app.renderResultContainer();
             app.bindEvents($root);
         };
 
         app.switchTab = function ($tab) {
             app.renderInputContainer($tab);
+            app.activeTab = $tab;
         };
 
         app.convertAmount = function ($amount, $inType, $outType) {
@@ -149,7 +155,7 @@
                     break;
                 case 'day': amountPerDay = $amount;
                     break;
-                case 'month': amountPerDay = $amount * 12 / 365;
+                case 'month': amountPerDay = ($amount * 12) / 365;
                     break;
                 case 'year': amountPerDay = $amount / 365;
                     break;
@@ -159,14 +165,18 @@
             switch ($outType) {
                 case 'day': resultAmount = amountPerDay;
                     break;
-                case 'month': resultAmount = $amount * 365 / 12;
+                case 'month': resultAmount = amountPerDay * 365 / 12;
                     break;
-                case 'year': resultAmount = $amount * 365;
+                case 'year': resultAmount = amountPerDay * 365;
                     break;
                 default: throw new Error('wrong output type ' + $outType);
             }
 
-            return resultAmount.toFixed(2);
+            return app.roundAmount(resultAmount);
+        };
+
+        app.roundAmount = function($amount) {
+            return $amount.toFixed(2);
         };
 
         app.bindEvents = function ($root) {
@@ -182,18 +192,20 @@
             });
 
             $($root).on('click', app.increaseButton, function () {
-                var input = $(this).closest('.input-group.input-group-sm').find('input'),
+                var input = $(this).closest('.main-calc').find('input'),
                     value = parseInt(input.val()) + 1;
 
                 input.val(value);
 
                 app.result[input.data('tab')][input.data('code')] = value;
 
+                $('#' + input.data('code') + '-total').text(app.roundAmount(parseFloat(input.data('cost')) * value));
+
                 app.renderResultContainer();
             });
 
             $($root).on('click', app.decreaseButton, function () {
-                var input = $(this).closest('.input-group.input-group-sm').find('input');
+                var input = $(this).closest('.main-calc').find('input');
 
                 if (parseInt(input.val()) <= 0)
                     return false;
@@ -205,6 +217,18 @@
 
                 if (value === 0)
                     delete app.result[input.data('tab')][input.data('code')];
+
+                $('#' + input.data('code') + '-total').text(app.roundAmount(parseFloat(input.data('cost')) * value));
+
+                app.renderResultContainer();
+            });
+
+            $($root).on('click', app.cleanTabLink, function () {
+                var tab = $(this).data('tab');
+                app.result[tab] = {};
+
+                if (tab === app.activeTab)
+                    app.renderInputContainer(tab);
 
                 app.renderResultContainer();
             });
