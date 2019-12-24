@@ -7,9 +7,11 @@
             resultContainer: '.result-container',
             decreaseButton: 'button#decrease',
             increaseButton: 'button#increase',
+            cleanTabLink: '.clean-tab',
             link: '.nav-link',
             rootTpl: 'root-tpl',
             kvmTpl: 'vmware-kvm-tpl',
+            resultTpl: 'result-tpl',
             mapOfServices: {
                 vmware: [
                     'IS-VHDD-SAS-GB-D-CS-FACT-ESX',
@@ -24,30 +26,31 @@
                     'IS-VHDD-SATA-GB-D-CS-FACT-KVM',
                     'IS-VHDD-SSD-GB-D-CS-FACT-KVM',
                     'IS-VCPU-SL6-PC-D-CS-FACT-KVM',
-                    'IS-VRAM-000-GB-D-CS-FACT-KVM',
+                    'IS-VRAM-000-GB-D-CS-FACT-KVM'
                 ],
                 lic: [
                     'IS-SLIC-002-PC-D-CS-FACT-ESX',
                     'IS-SLIC-007-PC-D-CS-FACT-ESX',
                     'IS-SLIC-001-PC-D-CS-FACT-ESX',
-                    'IS-SLIC-000-PC-D-CS-FACT-ESX',
+                    'IS-SLIC-000-PC-D-CS-FACT-ESX'
                 ],
                 storage: [
                     'Next Cloud',
-                    'S3',
+                    'S3'
                 ],
                 office: [
                     'Exchange',
-                    'Zextras',
+                    'Zextras'
                 ],
-                messages: ['Express'],
+                messages: ['Express']
             },
             result: {
                 vmware: {},
                 kvm: {},
                 lic: {},
                 storage: {},
-                messages: {},
+                office: {},
+                messages: {}
             },
             tabs: {
 
@@ -65,7 +68,27 @@
         };
 
         app.renderResultContainer = function () {
+            var items = {};
+            for (var tab in app.result) {
+                if (!$.isEmptyObject(app.result[tab])) {
+                    items[tab] = {};
+                    for (var code in app.result[tab]) {
+                        var product = app.extractFromJson(code);
+                        items[tab][code] = {
+                            name: product['name'],
+                            count: app.result[tab][code],
+                            unit: product['unit'],
+                            amount: app.convertAmount(product['cost'], product['per'], 'month') * app.result[tab][code]
+                        }
+                    }
+                }
+            }
+            console.log(items)
+            var tpl = _.template(document.getElementById(app.resultTpl).innerHTML);
 
+            $(app.resultContainer).html(tpl({
+                items: items
+            }));
         };
 
         app.renderInputCommon = function ($tab) {
@@ -143,7 +166,7 @@
                 default: throw new Error('wrong output type ' + $outType);
             }
 
-            return Math.round(resultAmount);
+            return resultAmount.toFixed(2);
         };
 
         app.bindEvents = function ($root) {
