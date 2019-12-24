@@ -82,7 +82,35 @@
         </tbody>
     </table>
 </script>
-
+<script type="text/template" id="result-tpl">
+    <h5>Стоимость</h5>
+    <% for (var tab in items) { %>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col"><%= tab %></th>
+                <th scope="col"></th>
+                <th scope="col"><a class="clean-tab" href="javascript:void(0)" data-tab="<%= tab %>">X</a></th>
+            </tr>
+            </thead>
+            <tbody>
+            <% for (var code in items[tab]) { %>
+                <% if (code != 'total') { %>
+                <tr>
+                    <td><%= items[tab][code].name %></td>
+                    <td><%= items[tab][code].count %> <%= items[tab][code].unit %></td>
+                    <td><%= items[tab][code].amount %></td>
+                </tr>
+                <% } else {%>
+                <tr>
+                    <td colspan="3"></td>
+                </tr>
+                <% } %>
+            <% } %>
+            </tbody>
+        </table>
+    <% } %>
+</script>
 <script src="calc.js"></script>
 <script type="text/javascript">
     tildaCalculator.init('.calc-render');
