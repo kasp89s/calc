@@ -48,13 +48,13 @@ body{
 }
 a{color:#000D40;text-decoration: none}
 .clear {
-  clear: both;
-  display: block
+	clear: both;
+	display: block
 }
 .clearfix:before,
 .clearfix:after {
-  content: " ";
-  display: table
+	content: " ";
+	display: table
 }
 .clearfix:after {clear: both}
 /* ----style-form---*/
@@ -74,19 +74,19 @@ h1,.h1 {
 	font-size: 21px;
 	line-height: 1.2em;
 	font-weight: 500;
-	margin-bottom: 41px  
+	margin-bottom: 41px
 }
 h2,.h2 {
 	font-size: 24px;
 	line-height: 1.2em;
 	font-weight: 500;
-	margin-bottom: 20px  
+	margin-bottom: 20px
 }
 h6,.h6 {
 	font-size: 16px;
 	line-height: 1.2em;
 	font-weight: 500;
-	margin-bottom: 18px  
+	margin-bottom: 18px
 }
 .tabs {
 	font-size: 16px;
@@ -113,23 +113,22 @@ h6,.h6 {
 }
 .box-tabs {display: none}
 .box-tabs.visible {display: block}
-.group-table {overflow: auto}
-.group-table table {width: 100%;min-width: 450px}
+.group-table table {width: 100%}
 .storage-table table {min-width: 500px}
 .group-table table tr+tr+tr,.table-info-exp tr+tr+tr {border-top: 1px solid #d7d7d7}
 .group-table th, .group-table td {
 	padding: 9px 6px;
-	width: 23%;
 	vertical-align: middle;
 	position: relative
 }
-.group-table th:nth-child(2), .group-table td:nth-child(2) {width: 31%}
+.group-table th:nth-child(1), .group-table td:nth-child(1) {width: 35%}
+.group-table th:nth-child(2), .group-table td:nth-child(2) {width: 28%}
 .group-table td:nth-child(2) {white-space: nowrap}
 .group-table th {padding-bottom: 22px}
 .group-table th:first-child, .group-table td:first-child {padding-left: 0}
 .group-table th:last-child, .group-table td:last-child {padding-right: 0}
 .group-table th:nth-child(3), .group-table td:nth-child(3),
-.group-table th:nth-child(4), .group-table td:nth-child(4) {text-align: right} 
+.group-table th:nth-child(4), .group-table td:nth-child(4) {text-align: right}
 .group-table td {
 	color: #000D40;
 	font-size: 16px;
@@ -142,8 +141,8 @@ h6,.h6 {
 	padding: 9px 2px
 }
 .storage-table td:nth-child(3) {white-space: nowrap}
-.storage-table th:nth-child(3), .storage-table td:nth-child(3) {text-align: left} 
-.storage-table th:nth-child(5), .storage-table td:nth-child(5)  {text-align: right} 
+.storage-table th:nth-child(3), .storage-table td:nth-child(3) {text-align: left}
+.storage-table th:nth-child(5), .storage-table td:nth-child(5)  {text-align: right}
 .group-table td:first-child span {
 	display: block;
 	font-size: 14px;
@@ -155,25 +154,30 @@ h6,.h6 {
 
 .table-info-tarif {width: 100%;margin-bottom: 36px}
 .table-info-mess {width: 100%}
-.table-info-tarif tr+tr+tr,.table-info-mess tr+tr+tr {border-top: 1px solid #d7d7d7}
-.table-info-tarif th, .table-info-tarif td,.table-info-mess th,.table-info-mess td {
+.table-tarif {width: 100%;margin-bottom: 30px}
+.table-info-tarif tr+tr+tr,.table-info-mess tr+tr+tr,.table-tarif tr+tr+tr {border-top: 1px solid #d7d7d7}
+.table-info-tarif th, .table-info-tarif td,.table-info-mess th,.table-info-mess td,
+.table-tarif th,.table-tarif td {
 	padding: 9px 6px;
 	vertical-align: middle
 }
 .table-info-tarif th:first-child,.table-info-tarif td:first-child,
 .table-info-mess th:first-child,.table-info-mess td:first-child,
-.table-info-exp td:first-child,.table-info-exp th:first-child {padding-left: 0}
+.table-info-exp td:first-child,.table-info-exp th:first-child,
+.table-tarif th:first-child,.table-tarif td:first-child {padding-left: 0}
 .table-info-tarif th:last-child,.table-info-tarif td:last-child,
 .table-info-exp th:last-child,.table-info-exp td:last-child {padding-right: 0;text-align: right}
-.table-info-tarif td,.table-info-mess td,.table-info-exp td {
+.table-info-tarif td,.table-info-mess td,.table-info-exp td,.table-tarif td {
 	font-size: 16px;
 	font-weight: 500;
 	color: #000D40
 }
-.table-info-mess th,.table-info-tarif th,.table-info-exp th {padding-bottom: 18px}
-.table-info-mess th,.table-info-mess td {
-	width: 33.33333%
-}
+.table-info-mess th,.table-info-tarif th,.table-info-exp th,.table-tarif th {padding-bottom: 18px}
+.table-info-mess th,.table-info-mess td {width: 23%}
+.table-info-mess th:nth-child(1),.table-info-mess td:nth-child(1) {width: 27%}
+.table-info-mess th:nth-child(2),.table-info-mess td:nth-child(2) {width: 27%}
+.table-info-mess th:nth-child(3),.table-info-mess td:nth-child(3),
+.table-info-mess th:nth-child(4),.table-info-mess td:nth-child(4) {text-align: right}
 .table-info-exp {width: 100%}
 .table-info-exp th,.table-info-exp td {
 	padding: 9px 6px;
@@ -181,6 +185,11 @@ h6,.h6 {
 }
 .table-info-exp th:nth-child(1),.table-info-exp td:nth-child(1),
 .table-info-exp th:nth-child(2),.table-info-exp td:nth-child(2) {width: 23%}
+.table-tarif th:nth-child(3),.table-tarif td:nth-child(3),
+.table-tarif th:nth-child(4),.table-tarif td:nth-child(4) {text-align: right}
+.table-tarif th:first-child,.table-tarif td:first-child {width: 30%}
+.t-table th:nth-child(2),.t-table td:nth-child(2) {text-align: right}
+.t-table th,.t-table td {width: 30%}
 
 .head-info {
 	font-size: 14px;
@@ -189,7 +198,6 @@ h6,.h6 {
 	margin-bottom: 14px;
 	display: none
 }
-
 
 .main-calc {
 	display:inline-block;
@@ -209,7 +217,7 @@ h6,.h6 {
 	width:100%;
 	text-align:center;
 	color: #000D40;
-	text-overflow: ellipsis;
+	text-overflow: ellipsis
 }
 .minus, .plus {
 	position: absolute;
@@ -330,6 +338,12 @@ h6,.h6 {
 	color: #D7D7D7;
 	font-weight: 400
 }
+.txt {
+	line-height: 1.5em;
+	color: #666B7D;
+	font-size: 14px;
+	margin-bottom: 30px
+}
 
 .btn {
 	background: linear-gradient(270deg, #3376FF 0%, #002CD0 100%);
@@ -340,52 +354,80 @@ h6,.h6 {
 	line-height: 1.43333em;
 	display: inline-block;
 	vertical-align: middle;
-	padding: 13px 10px
+	padding: 13px 10px;
+	outline: none
 }
+
 .btn:hover {background: linear-gradient(270deg, #002CD0 0%, #3376FF 100%)}
+
 .bootstrap-select {
 	display: inline-block;
 	width: 80px!important;
 	margin-right: 2px;
+	background: none!important;
 	outline: none
 }
 .bootstrap-select .btn {
 	background: none!important;
-	outline: none;
 	color: #000D40;
 	border: 1px solid #ebebeb;
 	text-shadow: none;
 	width: 100%;
 	font-size: 14px;
 	font-weight: 400;
-	padding: 5px 8px 4px
+	padding: 5px 8px 4px;
+	box-shadow:none
+}
+.dropdown-menu {box-shadow: 0px 3px 8px #d0d0d8}
+.bootstrap-select .btn.active.focus,
+.bootstrap-select .btn.active:focus,
+.bootstrap-select .btn.focus,
+.bootstrap-select .btn:active.focus,
+.bootstrap-select .btn:active:focus,
+.bootstrap-select .btn:focus{
+	border: 1px solid #ebebeb;
+	outline:none!important
 }
 .bs-searchbox{padding:0}
 .bootstrap-select .form-control {
-	padding: 1px 8px!important
+	padding: 1px 8px!important;
+	outline: none!important;
 }
-.dropdown-menu li.active a {background: #1F41C3}
+.bootstrap-select .dropdown-menu li a {padding: 6px 10px}
+.bootstrap-select .dropdown-menu li.active a,.bootstrap-select .dropdown-menu li a:hover {
+	background: #1F41C3;color: #fff
+}
 .bootstrap-select .caret {display: none}
 .bs-caret:before {
-    content: '\e114';
-    display: block;
-    pointer-events: none;
-    position: absolute;
-    top: 50%;
-    right: 7px;
-    z-index: 1;
-    margin-top: -4px;
-    font-family:'Glyphicons Halflings';
-    font-style:normal;
-    font-weight:400;
-    line-height:1;
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-    color: #666b7e;
-    font-size: 8px
+	content: '\e114';
+	display: block;
+	pointer-events: none;
+	position: absolute;
+	top: 50%;
+	right: 7px;
+	z-index: 1;
+	margin-top: -4px;
+	font-family:'Glyphicons Halflings';
+	font-style:normal;
+	font-weight:400;
+	line-height:1;
+	-webkit-font-smoothing:antialiased;
+	-moz-osx-font-smoothing:grayscale;
+	color: #666b7e;
+	font-size: 8px
 }
 .bootstrap-select.open .bs-caret:before {content: '\e113'}
-
+.bootstrap-select .dropdown-menu {
+	list-style: none;
+	margin: 0;
+	padding: 0
+}
+@media only screen and (max-width:1199px){
+	.group-table td {
+		font-size: 14px;
+		line-height: 1.2em
+	}
+}
 @media only screen and (max-width:991px){
 	.page {padding: 30px 0}
 	h1,.h1 {margin-bottom: 30px}
@@ -393,31 +435,47 @@ h6,.h6 {
 @media only screen and (max-width:767px){
 	h1,.h1 {margin-bottom: 20px}
 	.white-group {padding: 20px 15px}
-	.group-table th, .group-table td {padding: 9px 4px}
+	.group-table th {display: none}
+	.group-table td {
+		display: block;
+		width: 100%!important
+	}
+	.group-table .head-info {
+		display: inline-block;
+		vertical-align: middle;
+		margin: 0 12px 0 0
+	}
+	.group-table table td {padding: 8px 0}
+	.group-table table td:first-child {padding: 16px 0 0}
+	.group-table th:nth-child(3), .group-table td:nth-child(3),
+	.group-table th:nth-child(4), .group-table td:nth-child(4) {text-align: left}
 }
 @media only screen and (max-width:600px){
-	.table-info-exp th {display: none} 
-	.table-info-exp td {display: block;width: 100%!important;padding-bottom: 22px}
+	h6,.h6 {margin-bottom: 10px}
+	.table-info-exp th,.table-tarif th {display: none}
+	.table-info-exp td,.table-tarif td {display: block;width: 100%!important;padding-bottom: 22px}
 	.table-info-exp td:last-child {text-align: left}
 	.table-info-exp .head-info {display: block}
 	.table-info-exp .bootstrap-select {width: 150px!important}
 	.main-calc {width: 90px}
-	.group-table td:first-child,.group-table th:first-child {
-		position: absolute;
-		z-index: 2;
-		margin-left: -10px;
-		word-break: break-all;
-		font-size: 14px;
-		line-height: 36px;
-		background-color: #fff;
-	}
-	.group-table th:first-child {line-height: 1.2em}
-	.group-table td:first-child p,.group-table th:first-child p {
-		background-color: #fff;
+	.table-info-mess th {display: none}
+	.table-info-mess td {display: block;width: 100%!important;padding-bottom: 22px}
+	.head-info {display: block}
+	.table-info-mess .bootstrap-select {width: 150px!important}
+	.table-info-mess th:nth-child(3),.table-info-mess td:nth-child(3),
+	.table-info-mess th:nth-child(4),.table-info-mess td:nth-child(4) {text-align: left}
+	.table-tarif th:nth-child(3),.table-tarif td:nth-child(3),
+	.table-tarif th:nth-child(4),.table-tarif td:nth-child(4) {text-align: left}
+	.table-tarif td {padding:8px 0;margin: 6px 0}
+	.table-tarif td:first-child {padding: 10px 0 0}
+	.table-tarif .head-info,.table-info-mess .head-info{
+		margin: 0;
 		display: inline-block;
-		line-height: 1em
+		vertical-align: middle;
+		margin-right: 10px
 	}
-	.group-table th:first-child p {padding-top: 0}
+	.table-tarif .main-calc,.table-info-mess .main-calc {top: -2px}
+	.t-table th:nth-child(2),.t-table td:nth-child(2) {text-align: left}
 }
 @media only screen and (max-width:480px){
 	.white-group {
@@ -427,8 +485,4 @@ h6,.h6 {
 	.itog-price .col-xs-7 {width:100%;margin-bottom: 20px}
 	.itog-price .col-xs-5 {width:100%}
 	.itog-price .info-price {text-align: center}
-	.table-info-mess th {display: none}
-	.table-info-mess td {display: block;width: 100%!important;padding-bottom: 22px}
-	.head-info {display: block}
-	.table-info-mess .bootstrap-select {width: 150px!important}
 }
