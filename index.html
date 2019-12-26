@@ -23,9 +23,9 @@
                 <li class="nav-link active" data-link="vmware">VMware</li>
                 <li class="nav-link" data-link="kvm">KVM</li>
                 <li class="nav-link" data-link="lic">Лицензии</li>
-<!--                <li class="nav-link" data-link="storage">Хранилище</li>-->
-<!--                <li class="nav-link" data-link="office">Офис</li>-->
-<!--                <li class="nav-link" data-link="messages">Мессенджеры</li>-->
+                <li class="nav-link" data-link="storage">Хранилище</li>
+                <li class="nav-link" data-link="office">Офис</li>
+                <li class="nav-link" data-link="messages">Мессенджеры</li>
             </ul>
             <div class="box-tabs visible">
                 <div class="row">
@@ -36,6 +36,131 @@
                 </div>
             </div>
         </div>
+    </div>
+</script>
+<script type="text/template" id="messages-tpl">
+    <div class="white-group">
+        <% for (var i in items) { %>
+        <% var activeIndex = (tildaCalculator[i]) ? tildaCalculator[i] : 0; %>
+        <h6><%= i %></h6>
+        <table class="table-info-mess">
+            <tr>
+                <th>Пользователи</th>
+                <th>Количество</th>
+                <th>Цена в месяц</th>
+                <th>Стоимость</th>
+            </tr>
+            <tr>
+                <td class="text-nowrap">
+                    <p class="head-info">Пользователи</p>
+                    <select class="selectpicker <%= i %>-selector">
+                        <% items[i].forEach(function (element, key) { %>
+                            <option value="<%= key %>" <% if (key == activeIndex) { %>selected<% } %> ><%= element.tariff.replace(/[^+\d]/g, "") %></option>
+                        <% }) %>
+                    </select>
+                    <span class="st">чел.</span>
+                </td>
+                <%
+                var element = items[i][activeIndex],
+                cost = tildaCalculator.convertAmount(element.cost, element.per, 'month'),
+                count = (typeof tabData[element.code] === 'undefined') ? 0 : tabData[element.code],
+                total = (typeof tabData[element.code] === 'undefined') ? 0 : (tabData[element.code] * cost).toFixed(2);
+                %>
+                <td class="text-nowrap">
+                    <p class="head-info">Количество</p>
+                    <div class="main-calc">
+                        <a href="javascript:void(0)" class="minus decrease"></a>
+                        <input type="text" value="<%= count%>" class="<%= i %>-input" id="<%= element.code%>-input" data-code="<%= element.code%>" data-cost="<%= cost%>" data-tab="<%= tab%>" disabled />
+                        <a href="javascript:void(0)" class="plus increase"></a>
+                    </div>
+                    <span class="st"><%= element.unit%>.</span>
+                </td>
+                <td><%= cost%> ₽</td>
+                <td><span id="<%= element.code%>-total"><%= total %></span> ₽</td>
+            </tr>
+        </table>
+        <% } %>
+    </div>
+</script>
+<script type="text/template" id="office-tpl">
+    <div class="white-group">
+        <% for (var i in items) { %>
+        <h6><%= i %></h6>
+        <% if (items[i][0].description) { %>
+            <div class="txt"><%= items[i][0].description %></div>
+        <% } %>
+        <table class="table-tarif <% if (!items[i][0].tariff) { %>t-table<% } %>">
+            <tr>
+                <% if (items[i][0].tariff) { %>
+                <th>Тариф</th>
+                <% } %>
+                <th>Количество</th>
+                <th>Цена в месяц</th>
+                <th>Стоимость</th>
+            </tr>
+            <% items[i].forEach(function (element) { %>
+            <%
+                var cost = tildaCalculator.convertAmount(element.cost, element.per, 'month'),
+                count = (typeof tabData[element.code] === 'undefined') ? 0 : tabData[element.code],
+                total = (typeof tabData[element.code] === 'undefined') ? 0 : (tabData[element.code] * cost).toFixed(2);
+            %>
+            <tr>
+                <% if (element.tariff) { %>
+                <td><%= element.tariff %></td>
+                <% } %>
+                <td class="text-nowrap">
+                    <div class="main-calc">
+                        <a href="javascript:void(0)" class="minus decrease"></a>
+                        <input type="text"value="<%= count%>" id="<%= element.code%>-input" data-code="<%= element.code%>" data-cost="<%= cost%>" data-tab="<%= tab%>" disabled />
+                        <a href="javascript:void(0)" class="plus increase"></a>
+                    </div>
+                    <span class="st"><%= element.unit%>.</span>
+                </td>
+                <td><%= cost%> ₽</td>
+                <td><span id="<%= element.code%>-total"><%= total %></span> ₽</td>
+            </tr>
+            <% }) %>
+        </table>
+        <% } %>
+    </div>
+</script>
+<script type="text/template" id="storage-tpl">
+    <div class="white-group">
+        <% for (var i in items) { %>
+        <h6><%= i %></h6>
+        <table class="table-tarif <% if (!items[i][0].tariff) { %>t-table<% } %>">
+            <tr>
+                <% if (items[i][0].tariff) { %>
+                <th>Тариф</th>
+                <% } %>
+                <th>Количество</th>
+                <th>Цена в месяц</th>
+                <th>Стоимость</th>
+            </tr>
+            <% items[i].forEach(function (element) { %>
+            <%
+            var cost = tildaCalculator.convertAmount(element.cost, element.per, 'month'),
+            count = (typeof tabData[element.code] === 'undefined') ? 0 : tabData[element.code],
+            total = (typeof tabData[element.code] === 'undefined') ? 0 : (tabData[element.code] * cost).toFixed(2);
+            %>
+            <tr>
+                <% if (element.tariff) { %>
+                    <td><%= element.tariff %></td>
+                <% } %>
+                <td class="text-nowrap">
+                    <div class="main-calc">
+                        <a href="javascript:void(0)" class="minus decrease"></a>
+                        <input type="text"value="<%= count%>" id="<%= element.code%>-input" data-code="<%= element.code%>" data-cost="<%= cost%>" data-tab="<%= tab%>" disabled />
+                        <a href="javascript:void(0)" class="plus increase"></a>
+                    </div>
+                    <span class="st"><%= element.unit%>.</span>
+                </td>
+                <td><%= cost%> ₽</td>
+                <td><span id="<%= element.code%>-total"><%= total %></span> ₽</td>
+            </tr>
+            <% }) %>
+        </table>
+        <% } %>
     </div>
 </script>
 <script type="text/template" id="vmware-kvm-tpl">
@@ -78,14 +203,19 @@
             <h2>Стоимость</h2>
             <% for (var tab in items) { %>
             <div class="head">
-                Сегмент <%= tab %>
+                Сегмент <%= tildaCalculator.tabs[tab] %>
                 <i class="off off-absolute clean-tab" data-tab="<%= tab %>"></i>
             </div>
                 <% for (var code in items[tab]) { %>
                     <% if (code != 'total') { %>
                     <div class="price-item">
                         <div class="row">
-                            <div class="col-xs-4"><%= items[tab][code].name %></div>
+                            <div class="col-xs-4">
+                                <%= items[tab][code].name %>
+                                <% if (typeof items[tab][code].tariff !== 'undefined') { %>
+                                    <%= items[tab][code].tariff %>
+                                <% } %>
+                            </div>
                             <div class="col-xs-4 text-right"><%= items[tab][code].count %> <%= items[tab][code].unit %></div>
                             <div class="col-xs-4 text-right"><%= items[tab][code].amount %> ₽</div>
                         </div>
@@ -116,6 +246,8 @@
         </div>
     </div>
 </script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap-select.min.js"></script>
 <script src="calc.js"></script>
 <script type="text/javascript">
     tildaCalculator.init('.calc-render');
