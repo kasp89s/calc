@@ -237,7 +237,7 @@
             $($root).on('change', 'input', function () {
                 var input = $(this),
                     min = parseInt(input.data('min')),
-                    value = parseInt(input.val()) + 1;
+                    value = parseInt(input.val());
 
                 if (value < min)
                     value = min;
@@ -245,7 +245,10 @@
                 input.val(value);
 
                 app.result[input.data('tab')][input.data('code')] = value;
-
+                
+                if (value === 0)
+                    delete app.result[input.data('tab')][input.data('code')];
+                
                 $('#' + input.data('code') + '-total').text(app.roundAmount(parseFloat(input.data('cost')) * value));
 
                 app.renderResultContainer();
