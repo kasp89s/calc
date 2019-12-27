@@ -63,6 +63,7 @@
                 <%
                 var element = items[i][activeIndex],
                 cost = tildaCalculator.convertAmount(element.cost, element.per, 'month'),
+                min = (typeof element.min === 'undefined') ? 1 : element.min,
                 count = (typeof tabData[element.code] === 'undefined') ? 0 : tabData[element.code],
                 total = (typeof tabData[element.code] === 'undefined') ? 0 : (tabData[element.code] * cost).toFixed(2);
                 %>
@@ -70,7 +71,7 @@
                     <p class="head-info">Количество</p>
                     <div class="main-calc">
                         <a href="javascript:void(0)" class="minus decrease"></a>
-                        <input type="text" value="<%= count%>" class="<%= i %>-input" id="<%= element.code%>-input" data-code="<%= element.code%>" data-cost="<%= cost%>" data-tab="<%= tab%>" disabled />
+                        <input type="text" value="<%= count%>" class="<%= i %>-input" id="<%= element.code%>-input" data-min="<%= min%>" data-code="<%= element.code%>" data-cost="<%= cost%>" data-tab="<%= tab%>" disabled />
                         <a href="javascript:void(0)" class="plus increase"></a>
                     </div>
                     <span class="st"><%= element.unit%>.</span>
@@ -101,6 +102,7 @@
             <% items[i].forEach(function (element) { %>
             <%
                 var cost = tildaCalculator.convertAmount(element.cost, element.per, 'month'),
+                min = (typeof element.min === 'undefined') ? 1 : element.min,
                 count = (typeof tabData[element.code] === 'undefined') ? 0 : tabData[element.code],
                 total = (typeof tabData[element.code] === 'undefined') ? 0 : (tabData[element.code] * cost).toFixed(2);
             %>
@@ -111,7 +113,7 @@
                 <td class="text-nowrap">
                     <div class="main-calc">
                         <a href="javascript:void(0)" class="minus decrease"></a>
-                        <input type="text"value="<%= count%>" id="<%= element.code%>-input" data-code="<%= element.code%>" data-cost="<%= cost%>" data-tab="<%= tab%>" disabled />
+                        <input type="text"value="<%= count%>" id="<%= element.code%>-input" data-min="<%= min%>" data-code="<%= element.code%>" data-cost="<%= cost%>" data-tab="<%= tab%>" disabled />
                         <a href="javascript:void(0)" class="plus increase"></a>
                     </div>
                     <span class="st"><%= element.unit%>.</span>
@@ -140,6 +142,7 @@
             <% items[i].forEach(function (element) { %>
             <%
             var cost = tildaCalculator.convertAmount(element.cost, element.per, 'month'),
+            min = (typeof element.min === 'undefined') ? 1 : element.min,
             count = (typeof tabData[element.code] === 'undefined') ? 0 : tabData[element.code],
             total = (typeof tabData[element.code] === 'undefined') ? 0 : (tabData[element.code] * cost).toFixed(2);
             %>
@@ -150,7 +153,7 @@
                 <td class="text-nowrap">
                     <div class="main-calc">
                         <a href="javascript:void(0)" class="minus decrease"></a>
-                        <input type="text"value="<%= count%>" id="<%= element.code%>-input" data-code="<%= element.code%>" data-cost="<%= cost%>" data-tab="<%= tab%>" disabled />
+                        <input type="text"value="<%= count%>" id="<%= element.code%>-input" data-code="<%= element.code%>" data-min="<%= min%>" data-cost="<%= cost%>" data-tab="<%= tab%>" disabled />
                         <a href="javascript:void(0)" class="plus increase"></a>
                     </div>
                     <span class="st"><%= element.unit%>.</span>
@@ -176,6 +179,7 @@
                 <% items.forEach( function (element) { %>
                 <%
                     var cost = tildaCalculator.convertAmount(element.cost, element.per, 'month'),
+                        min = (typeof element.min === 'undefined') ? 1 : element.min,
                         count = (typeof tabData[element.code] === 'undefined') ? 0 : tabData[element.code],
                         total = (typeof tabData[element.code] === 'undefined') ? 0 : (tabData[element.code] * cost).toFixed(2);
                 %>
@@ -184,7 +188,7 @@
                     <td>
                         <div class="main-calc">
                             <a href="javascript:void(0)" class="minus decrease"></a>
-                            <input type="text" value="<%= count%>" id="<%= element.code%>-input" data-code="<%= element.code%>" data-cost="<%= cost%>" data-tab="<%= tab%>" disabled />
+                            <input type="text" value="<%= count%>" id="<%= element.code%>-input" data-code="<%= element.code%>" data-min="<%= min%>" data-cost="<%= cost%>" data-tab="<%= tab%>" disabled />
                             <a href="javascript:void(0)" class="plus increase"></a>
                         </div>
                         <span class="st"><%= element.unit%>.</span>

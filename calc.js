@@ -15,19 +15,19 @@
             activeTab: 'vmware',
             mapOfServices: {
                 vmware: [
+                    'IS-VCPU-SL6-PC-D-CS-FACT-ESX',
+                    'IS-VRAM-000-GB-D-CS-FACT-ESX',
                     'IS-VHDD-SAS-GB-D-CS-FACT-ESX',
                     'IS-VHDD-SATA-GB-D-CS-FACT-ESX',
                     'IS-VHDD-SSD-GB-D-CS-FACT-ESX',
-                    'IS-VCPU-SL6-PC-D-CS-FACT-ESX',
-                    'IS-VRAM-000-GB-D-CS-FACT-ESX',
                     'IS-IPV4-000-PC-D-CS-FACT-ESX'
                 ],
                 kvm: [
+                    'IS-VCPU-SL6-PC-D-CS-FACT-KVM',
+                    'IS-VRAM-000-GB-D-CS-FACT-KVM',
                     'IS-VHDD-SAS-GB-D-CS-FACT-KVM',
                     'IS-VHDD-SATA-GB-D-CS-FACT-KVM',
-                    'IS-VHDD-SSD-GB-D-CS-FACT-KVM',
-                    'IS-VCPU-SL6-PC-D-CS-FACT-KVM',
-                    'IS-VRAM-000-GB-D-CS-FACT-KVM'
+                    'IS-VHDD-SSD-GB-D-CS-FACT-KVM'
                 ],
                 lic: [
                     'IS-SLIC-002-PC-D-CS-FACT-ESX',
@@ -103,7 +103,7 @@
 
             $(app.resultContainer).html(tpl({
                 resultTotal: app.roundAmount(resultTotal),
-                items: items,
+                items: items
             }));
         };
 
@@ -116,7 +116,7 @@
             $(app.inputContainer).html(tpl({
                 tab: $tab,
                 tabData: app.result[$tab],
-                items: itemsForRender,
+                items: itemsForRender
             }));
 
             $('.selectpicker').selectpicker();
@@ -153,7 +153,7 @@
             $(app.inputContainer).html(tpl({
                 tab: $tab,
                 tabData: app.result[$tab],
-                items: itemsForRender,
+                items: itemsForRender
             }));
         };
 
@@ -236,7 +236,11 @@
 
             $($root).on('click', app.increaseButton, function () {
                 var input = $(this).closest('.main-calc').find('input'),
+                    min = parseInt(input.data('min')),
                     value = parseInt(input.val()) + 1;
+
+                if (value < min)
+                    value = min;
 
                 input.val(value);
 
@@ -248,12 +252,16 @@
             });
 
             $($root).on('click', app.decreaseButton, function () {
-                var input = $(this).closest('.main-calc').find('input');
+                var input = $(this).closest('.main-calc').find('input'),
+                    min = parseInt(input.data('min'));
 
                 if (parseInt(input.val()) <= 0)
                     return false;
 
                 var value = parseInt(input.val()) - 1;
+
+                if (value < min)
+                    value = 0;
 
                 input.val(value);
                 app.result[input.data('tab')][input.data('code')] = value;
