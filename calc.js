@@ -234,6 +234,23 @@
                 app.switchTab($(this).data('link'));
             });
 
+            $($root).on('change', 'input', function () {
+                var input = $(this),
+                    min = parseInt(input.data('min')),
+                    value = parseInt(input.val()) + 1;
+
+                if (value < min)
+                    value = min;
+
+                input.val(value);
+
+                app.result[input.data('tab')][input.data('code')] = value;
+
+                $('#' + input.data('code') + '-total').text(app.roundAmount(parseFloat(input.data('cost')) * value));
+
+                app.renderResultContainer();
+            });
+            
             $($root).on('click', app.increaseButton, function () {
                 var input = $(this).closest('.main-calc').find('input'),
                     min = parseInt(input.data('min')),
