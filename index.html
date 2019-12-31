@@ -130,6 +130,9 @@
     <div class="white-group">
         <% for (var i in items) { %>
         <h6><%= i %></h6>
+		<% if (items[i][0].description) { %>
+            <div class="txt"><%= items[i][0].description %></div>
+        <% } %>
         <table class="table-tarif <% if (!items[i][0].tariff) { %>t-table<% } %>">
             <tr>
                 <% if (items[i][0].tariff) { %>
