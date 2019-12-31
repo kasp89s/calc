@@ -64,11 +64,10 @@
         };
 
         app.loadJson = function(callback) {
-            $.get('data.json', function (json) {
+            $.get('https://svc-billtest.sbcloud.ru/json.php', function (json) {
                 app.jsonData = json.plans[0].items;
                 callback();
             });
-            // app.jsonData = JSON.plans[0].items;
         };
 
         app.renderInputContainer = function ($tab) {
@@ -223,7 +222,7 @@
         };
 
         app.roundAmount = function($amount) {
-            return $amount.toFixed(2);
+            return $amount.toFixed(2).toLocaleString('ru');
         };
 
         app.renderAmount = function ($amount) {
@@ -261,7 +260,7 @@
                     input.val(value);
                     app.result[input.data('tab')][input.data('code')] = value;
                 }
-                $('#' + input.data('code') + '-total').text(app.renderAmount(app.roundAmount(parseFloat(input.data('cost')) * value)));
+                $('#' + input.data('code') + '-total').text(app.roundAmount(parseFloat(input.data('cost')) * value));
                 app.renderResultContainer();
             });
             
@@ -277,7 +276,7 @@
 
                 app.result[input.data('tab')][input.data('code')] = value;
 
-                $('#' + input.data('code') + '-total').text(app.renderAmount(app.roundAmount(parseFloat(input.data('cost')) * value)));
+                $('#' + input.data('code') + '-total').text(app.roundAmount(parseFloat(input.data('cost')) * value));
 
                 app.renderResultContainer();
             });
@@ -300,7 +299,7 @@
                 if (value === 0)
                     delete app.result[input.data('tab')][input.data('code')];
 
-                $('#' + input.data('code') + '-total').text(app.renderAmount(app.roundAmount(parseFloat(input.data('cost')) * value)));
+                $('#' + input.data('code') + '-total').text(app.roundAmount(parseFloat(input.data('cost')) * value));
 
                 app.renderResultContainer();
             });

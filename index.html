@@ -76,8 +76,8 @@
                     </div>
                     <span class="st"><%= element.unit%>.</span>
                 </td>
-                <td><%= cost%> ₽</td>
-                <td><span id="<%= element.code%>-total"><%= total %></span> ₽</td>
+                <td><%= tildaCalculator.renderAmount(cost)%> ₽</td>
+                <td><span id="<%= element.code%>-total"><%= tildaCalculator.renderAmount(total) %></span> ₽</td>
             </tr>
         </table>
         <% } %>
@@ -118,8 +118,8 @@
                     </div>
                     <span class="st"><%= element.unit%>.</span>
                 </td>
-                <td><%= cost%> ₽</td>
-                <td><span id="<%= element.code%>-total"><%= total %></span> ₽</td>
+                <td><%= tildaCalculator.renderAmount(cost)%> ₽</td>
+                <td><span id="<%= element.code%>-total"><%= tildaCalculator.renderAmount(total) %></span> ₽</td>
             </tr>
             <% }) %>
         </table>
@@ -158,8 +158,8 @@
                     </div>
                     <span class="st"><%= element.unit%>.</span>
                 </td>
-                <td><%= cost%> ₽</td>
-                <td><span id="<%= element.code%>-total"><%= total %></span> ₽</td>
+                <td><%= tildaCalculator.renderAmount(cost)%> ₽</td>
+                <td><span id="<%= element.code%>-total"><%= tildaCalculator.renderAmount(total) %></span> ₽</td>
             </tr>
             <% }) %>
         </table>
@@ -193,8 +193,8 @@
                         </div>
                         <span class="st"><%= element.unit%>.</span>
                     </td>
-                    <td><%= cost%> ₽</td>
-                    <td><span id="<%= element.code%>-total"><%= total %></span> ₽</td>
+                    <td><%= tildaCalculator.renderAmount(cost)%> ₽</td>
+                    <td><span id="<%= element.code%>-total"><%= tildaCalculator.renderAmount(total) %></span> ₽</td>
                 </tr>
                 <% }); %>
             </table>
@@ -221,11 +221,11 @@
                                 <% } %>
                             </div>
                             <div class="col-xs-4 text-right"><%= items[tab][code].count %> <%= items[tab][code].unit %></div>
-                            <div class="col-xs-4 text-right"><%= items[tab][code].amount %> ₽</div>
+                            <div class="col-xs-4 text-right"><%= tildaCalculator.renderAmount(items[tab][code].amount) %> ₽</div>
                         </div>
                     </div>
                     <% } else {%>
-                        <div class="price-all text-right"><%= items[tab][code] %> ₽</div>
+                        <div class="price-all text-right"><%= tildaCalculator.renderAmount(items[tab][code]) %> ₽</div>
                     <% } %>
                 <% } %>
             <% } %>
@@ -235,15 +235,15 @@
                 <div class="col-lg-6 col-xs-7">
                     <div class="itog-price-item">
                         Итого:
-                        <div class="price"><%= tildaCalculator.convertAmount(resultTotal, 'month', 'day')%> ₽ <span>/ день</span></div>
+                        <div class="price"><%= tildaCalculator.renderAmount(tildaCalculator.convertAmount(resultTotal, 'month', 'day'))%> ₽ <span>/ день</span></div>
                     </div>
                     <div class="price-details">
-                        <p><%= resultTotal %> ₽ / месяц</p>
-                        <p><%= tildaCalculator.convertAmount(resultTotal, 'month', 'year')%> ₽ / год</p>
+                        <p><%= tildaCalculator.renderAmount(resultTotal) %> ₽ / месяц</p>
+                        <p><%= tildaCalculator.renderAmount(tildaCalculator.convertAmount(resultTotal, 'month', 'year'))%> ₽ / год</p>
                     </div>
                 </div>
                 <div class="col-lg-6 col-xs-5">
-                    <a class="btn btn-block" href="javascript:void(0)">Попробовать</a>
+                    <a class="btn btn-block" href="javascript:window.parent.location.href='https://sbcloud.ru/login'">Попробовать</a>
                     <div class="info-price">Все цены указаны с учётом НДС</div>
                 </div>
             </div>
