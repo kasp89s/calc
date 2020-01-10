@@ -68,7 +68,6 @@
                 app.jsonData = json.plans[0].items;
                 callback();
             });
-            // app.jsonData = JSON.plans[0].items;
         };
 
         app.renderInputContainer = function ($tab) {
@@ -89,11 +88,12 @@
                     for (var code in app.result[tab]) {
                         var product = app.extractFromJson(code);
                         items[tab][code] = {
-                            name: product['name'],
+                            name: product.item['name'],
                             count: app.result[tab][code],
-                            unit: product['unit'],
-                            tariff: product['tariff'],
-                            amount: app.roundAmount(app.convertAmount(product['cost'], product['per'], 'month') * app.result[tab][code])
+                            unit: product.item['unit'],
+                            tariff: product.item['tariff'],
+                            description: product.item['description'],
+                            amount: app.roundAmount(app.convertAmount(product.item['cost'], product.item['per'], 'month') * app.result[tab][code])
                         };
 
                         total+= parseFloat(items[tab][code].amount);
@@ -116,7 +116,7 @@
             var tpl = _.template(document.getElementById($tab + '-tpl').innerHTML);
 
             itemsForRender = app.prepareRenderItems($tab);
-
+			console.log(itemsForRender);
             $(app.inputContainer).html(tpl({
                 tab: $tab,
                 tabData: app.result[$tab],
@@ -149,9 +149,10 @@
         app.renderInputCommon = function ($tab) {
             var itemsForRender = [];
             app.mapOfServices[$tab].forEach(function (index) {
-                itemsForRender.push(app.extractFromJson(index));
+                var element = app.extractFromJson(index);
+                itemsForRender[element.index] = element.item;
             });
-
+            console.log(itemsForRender)
             var tpl = _.template(document.getElementById(app.kvmTpl).innerHTML);
 
             $(app.inputContainer).html(tpl({
@@ -162,10 +163,11 @@
         };
 
         app.extractFromJson = function($key) {
-            var result = null;
-            app.jsonData.some(function (item) {
+            var result = {};
+            app.jsonData.some(function (item, index) {
                 if (item.code === $key) {
-                    result = item;
+                    result.index = index;
+                    result.item = item;
                     return item;
                 }
             });
